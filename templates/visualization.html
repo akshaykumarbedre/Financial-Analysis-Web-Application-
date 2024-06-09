@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Plots</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <style>
+      body {
+        background-color: #1a1a1a;
+        /* Dark background color */
+        color: #d1d1d1;
+        /* Light text color */
+      }
+      img {
+        filter: brightness(0.8) contrast(1.2);
+        /* Adjust brightness and contrast for better visibility */
+        border: 1px solid #4d4d4d;
+        /* Add a dark border */
+        border-radius: 4px;
+        /* Add rounded corners */
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        width: auto;
+        display: block; /* Add this line to make the image a block-level element */
+        margin: 0 auto; /* Add this line to center the image horizontally */
+      }
+      .image-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(auto, 1fr));
+        grid-gap: 20px;
+        max-width: 1000px;
+        margin: 0 auto;
+      }
+      .image-grid div {
+        background-color: #2b2b2b; /* Dark background color for image containers */
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+      }
+      .image-grid h1 {
+        margin-top: 0;
+        font-size: 1.2rem;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <nav>
+        <a href="{{ url_for('index') }}" class="logo">InvestorEdge</a>
+        <ul>
+          <li><a href="{{ url_for('screener') }}">Screen screener</a></li>
+          <li><a href="{{ url_for('portfolio') }}">Portfolio</a></li>
+          <li><a href="{{ url_for('visualization') }}">Visualization</a></li>
+          <li><a href="{{ url_for('blog') }}">Blog</a></li>
+          <li><a href="{{ url_for('logout') }}"> {{ user }} Logout</a></li>
+        </ul>
+      </nav>
+    </header>
+    <h1>Stock anaylsis long term</h1>
+    <p class="lead">
+        Visualize the performance of the top 5 stocks with our interactive charts. Explore year-wise, month-wise, and 5-year trends to gain valuable insights and make informed investment decisions.
+      </p>
+    
+    <div class="image-grid">
+      <div>
+        <h1>Top Performers of the Past month</h1>
+        <img src="data:image/png;base64,{{ plot_url_20 }}" alt="Plot 10 Days">
+      </div>
+      <div>
+        <h1>Top Performers of the Past Year</h1>
+        <img src="data:image/png;base64,{{ plot_url_240 }}" alt="Plot 240 Days">
+      </div>
+      <div>
+        <h1>Top Performers of the 5 Year</h1>
+        <img src="data:image/png;base64,{{ plot_url_1200 }}" alt="Plot 240 Days">
+      </div>
+    </div>
+  </body>
+</html>

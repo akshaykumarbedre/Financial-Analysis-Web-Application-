@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Plots</title>
+
+    <meta charset="UTF-8">
+    <title>Stock Data Visualization</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@1.0.1"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <style>
+        body {
+            background-color: #1a1a1a;
+            /* Dark background color */
+            color: #d1d1d1;
+            /* Light text color */
+        }
+
+        img {
+            filter: brightness(0.8) contrast(1.2);
+            /* Adjust brightness and contrast for better visibility */
+            border: 1px solid #4d4d4d;
+            /* Add a dark border */
+            border-radius: 4px;
+            /* Add rounded corners */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            /* Add a subtle shadow */
+        }
+        .image-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.image-grid div {
+    background-color: #2b2b2b; /* Dark background color for image containers */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.image-grid h1 {
+    margin-top: 0;
+    font-size: 1.2rem;
+}
+    </style>
+</head>
+
+<body>
+    <header>
+        <nav>
+            <a href="{{ url_for('index') }}" class="logo">PayPro</a>
+            <ul>
+                <li><a href="{{ url_for('screener') }}">Screen screener</a></li>
+                <li><a href="{{ url_for('portfolio') }}">Portfolio</a></li>
+                <li> <a href="{{ url_for('visualization_intraday') }}">Visualization Intraday</a></li>
+                <li> <a href="{{ url_for('visualization') }}">Visualization</a></li>
+                <li> <a href="{{ url_for('blog') }}">Blog</a></li>
+                <li> <a href="{{ url_for('logout') }}"> {{ user }} Logout</a></li>
+
+            </ul>
+        </nav>
+    </header>
+    <h1>Stock anaylsis Short term</h1>
+    <div class="image-grid">
+
+    <div>
+        <h1>Top Performers of the Past month</h1>
+
+        <img src="data:image/png;base64,{{ plot_url_20 }}" alt="Plot 10 Days">
+    </div>
+    <div>
+        <h1>Top Looser of the Past month</h1>
+        <img src="data:image/png;base64,{{ plot_url_20N }}" alt="Plot 10 Days">
+    </div>
+    <div>
+        <h1>Top Performers of the Past Year</h1>
+        <img src="data:image/png;base64,{{ plot_url_240 }}" alt="Plot 240 Days">
+    </div>
+    <div>
+        <h1>Top Looser of the Past Year</h1>
+        <img src="data:image/png;base64,{{ plot_url_240N }}" alt="Plot 240 Days">
+    </div>
+</div>
+</body>
+
+</html>
