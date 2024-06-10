@@ -3,73 +3,47 @@
 <head>
     <title>My Blog</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+ 
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-        }
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 
-        header {
-            background-color: #333;
-            color: #fff;
-            padding: 20px;
-            text-align: center;
-        }
+article {
+  background-color: #fff;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+}
 
-        nav ul {
-            list-style-type: none;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-        }
+article h2 {
+  margin-bottom: 1rem;
+  color: #333;
+  font-size: 1.8rem;
+}
 
-        nav li {
-            margin: 0 10px;
-        }
+article p {
+  margin-bottom: 1rem;
+  line-height: 1.8;
+}
 
-        nav a {
-            color: #fff;
-            text-decoration: none;
-            padding: 5px 10px;
-            border-radius: 5px;
-        }
+article img {
+  max-width: 100%;
+  width:  35em;
+  margin-top: 1rem;
+  border-radius: 5px;
+}
 
-        nav a:hover {
-            background-color: #555;
-        }
-
-        main {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
-        article {
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            padding: 20px;
-            margin-bottom: 20px;
-        }
-
-        article h2 {
-            margin-top: 0;
-        }
-
-        article img {
-            max-width: 100%;
-            height: auto;
-            display: block;
-            margin: 20px auto 0;
-        }
-
-        footer {
-            background-color: #333;
-            color: #fff;
-            padding: 20px;
-            text-align: center;
-        }
+footer {
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  padding: 1rem;
+  font-size: 0.9rem;
+}
     </style>
 </head>
 <body>    <header>

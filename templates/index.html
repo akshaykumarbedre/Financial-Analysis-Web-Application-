@@ -4,35 +4,44 @@
 <head>
     <title>  Personalized Portfolio management and Stock Screener </title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+
     <style>
-        .hero-image {
-    position: relative;
-        }
+        .services {
+  padding: 2rem;
+  text-align: center;
+}
 
-        .image-container {
-            position: relative;
-        }
+.service-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 2rem;
+}
 
-        .image-container:before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(to right, rgba(255, 149, 102, 0.8), rgba(255, 94, 98, 0.8));
-            z-index: 1;
-        }
+.card {
+  background-color: #eeeeee;
+  padding: 1rem;
+  border-radius: 4px;
+}
+        .card img {
+  width:50%; /* Set a fixed width for all images */
+  
+}
+.hero-image img{
+    width: 80%;
+}
+p{
+    font-size: small;
+}
+h3{
+    font-size: medium;
+}
+h1{
+    font-size: xx-large;
+}
+ 
+    </style>
 
-        .image-container img {
-            display: block;
-            max-width: 100%;
-            height: auto;
-            position: relative;
-            z-index: 2;
-        }
 
-</style>
 </head>
 <body>
     <header>
@@ -117,6 +126,6 @@
     <footer>
         <p>&copy; 2024 InvestorEdge. All rights reserved.</p>
     </footer>
-    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+
 </body>
 </html>

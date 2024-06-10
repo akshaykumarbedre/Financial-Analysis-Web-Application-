@@ -2,79 +2,73 @@
 <html>
 <head>
     <title>Stock Recommendations</title>
+     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
     <style>
 
-        th {
-            cursor: pointer;
-            background-color: #f2f2f2;
-            padding: 8px;
-          }
-          
-          th:hover {
-            background-color: #737373;
-          }
-          body {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
-            background-color: #1a1a1a; /* Dark background color */
-        }
-        .stock-screener {
-            font-family: 'Arial', sans-serif;
-            line-height: 1.6;
-            color: #f8f9fa;
-            background-color: #343a40;
-            padding: 20px;
-            border-radius: 8px;
-        }
-        
-        .stock-screener h2 {
-            background-color: #797979;
-            color: #f8f9fa;
-            padding: 10px;
-            text-align: center;
-            border-radius: 4px;
-        }
-        
-        .stock-screener .indicator h3 {
-            background-color: #5b38e6;
-            color: #f8f9fa;
-            padding: 5px;
-            border-radius: 4px;
-        }
-        
-        .stock-screener ul {
-            background-color: #495057;
-            border: 1px solid #6c757d;
-            padding: 15px;
-            border-radius: 4px;
-        }
-        
-        .stock-screener li {
-            margin-bottom: 10px;
-        }
-        
-        /* Additional styles for visual enhancement */
-        .stock-screener .indicator {
-            margin-bottom: 20px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.5);
-        }
-        
-        .stock-screener ul {
-            list-style-type: none;
-        }
-        
-        .stock-screener li::before {
-            content: '✔️';
-            margin-right: 5px;
-            color: #28a745;
-        }
 
-        
-        
+h1, h2, h3 {
+    text-align: center;
+}
+
+.stock-screener {
+    margin: 20px;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.indicator {
+    margin-bottom: 20px;
+}
+
+.indicator h3 {
+    background-color: #333;
+    color: #fff;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.indicator ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.indicator li {
+    margin-bottom: 10px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background-color: #333;
+    color: #fff;
+    cursor: pointer;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+tr:hover {
+    background-color: #e6e6e6;
+}
+table a{
+    color:#333;
+}
 
     </style>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
-   
+
 </head>
 <body>
     <header>

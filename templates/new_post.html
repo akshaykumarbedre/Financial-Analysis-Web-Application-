@@ -4,11 +4,8 @@
     <title>New Post</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 20px;
-        }
+   
+ 
 
         h1 {
             text-align: center;
@@ -43,18 +40,8 @@
             margin-bottom: 15px;
         }
 
-        input[type="submit"] {
-            background-color: #4CAF50;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 3px;
-            cursor: pointer;
-        }
 
-        input[type="submit"]:hover {
-            background-color: #45a049;
-        }
+
     </style>
 </head>
 <body>
@@ -84,7 +71,7 @@
         <label for="image_file">Image:</label>
         <input type="file" id="image_file" name="image_file">
         <br>
-        <input type="submit" value="Submit">
+        <input type="submit" value="Submit" class="btn">
     </form>
 </body>
 </html>

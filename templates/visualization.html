@@ -1,44 +1,42 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Plots</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
-    <style>
-      body {
-        background-color: #1a1a1a;
-        /* Dark background color */
-        color: #d1d1d1;
-        /* Light text color */
-      }
-      img {
-        filter: brightness(0.8) contrast(1.2);
-        /* Adjust brightness and contrast for better visibility */
-        border: 1px solid #4d4d4d;
-        /* Add a dark border */
-        border-radius: 4px;
-        /* Add rounded corners */
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-        width: auto;
-        display: block; /* Add this line to make the image a block-level element */
-        margin: 0 auto; /* Add this line to center the image horizontally */
-      }
-      .image-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(auto, 1fr));
-        grid-gap: 20px;
-        max-width: 1000px;
-        margin: 0 auto;
-      }
-      .image-grid div {
-        background-color: #2b2b2b; /* Dark background color for image containers */
-        padding: 20px;
-        border-radius: 8px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-      }
-      .image-grid h1 {
-        margin-top: 0;
-        font-size: 1.2rem;
-      }
+    <title>Plots</title> <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+
+    <style>/* Reset some default styles */
+    
+    .lead {
+  margin: 1rem 0;
+  font-size: 1.2rem;
+}
+
+.image-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+  grid-gap: 1rem;
+}
+
+.image-grid div {
+  background-color: #f2f2f2;
+  padding: 1rem;
+  text-align: center;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.image-grid img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease;
+}
+
+.image-grid img:hover {
+  transform: scale(1.05);
+}
+
+
     </style>
   </head>
   <body>

@@ -1,8 +1,15 @@
-/* Header */
+/* General Styles */
+body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* Header Styles */
 header {
-    background-color: #5b38e6;
+    background-color: #333;
     color: #fff;
-    padding: 1rem;
+    padding: 15px;
 }
 
 nav {
@@ -11,66 +18,38 @@ nav {
     align-items: center;
 }
 
-.logo {
-    font-size: 1.5rem;
-    font-weight: bold;
-    text-decoration: none;
-    color: inherit;
-}
-
 nav ul {
     display: flex;
-    list-style: none;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
 }
 
 nav ul li {
-    margin-left: 1rem;
+    margin-left: 20px;
 }
 
-nav ul li a {
-    color: inherit;
-    text-decoration: none;
-}
-
-.btn {
-    background-color: #fff;
-    color: #5b38e6;
-    padding: 0.5rem 1rem;
-    border-radius: 4px;
-    text-decoration: none;
-}
-
-.btn-outline {
-    background-color: transparent;
+nav ul li a, a {
     color: #fff;
-    border: 1px solid #fff;
+    text-decoration: none;
 }
 
-/* Hero Section */
+/* Hero Section Styles */
 .hero {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 2rem;
-    background-color: #5b38e6;
-    color: #fff;
+    padding: 40px;
+    background-color: #f5f5f5;
 }
 
 .hero-content {
-    max-width: 600px;
+    flex: 1;
 }
 
-.hero-content h1 {
-    font-size: 3rem;
-    margin-bottom: 1rem;
-}
-
-.hero-content p {
-    margin-bottom: 2rem;
-}
-
-.cta-buttons .btn {
-    margin-right: 1rem;
+.hero-image {
+    flex: 1;
+    text-align: right;
 }
 
 .hero-image img {
@@ -78,269 +57,49 @@ nav ul li a {
     height: auto;
 }
 
-/* Integrations Section */
+/* Integrations Section Styles */
 .integrations {
     text-align: center;
-    padding: 2rem;
+    padding: 40px;
+    background-color: #e0e0e0;
 }
 
-.integration-logos {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 2rem;
-}
-
-.integration-logos img {
-    margin: 0 1rem;
-    max-height: 50px;
-}
-
-/* Services Section */
+/* Services Section Styles */
 .services {
-    text-align: center;
-    padding: 2rem;
-    background-color: #f5f5f5;
+    padding: 40px;
 }
 
 .service-cards {
-    display: flex;
-    justify-content: center;
-    margin-top: 2rem;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 20px;
 }
 
 .card {
-    background-color: #fff;
-    padding: 2rem;
-    margin: 0 1rem;
+    background-color: #f5f5f5;
+    padding: 20px;
     text-align: center;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .card img {
-    max-width: 100px;
-    margin-bottom: 1rem;
-}
-
-/* Footer */
-footer {
-    background-color: #5b38e6;
-    color: #fff;
-    text-align: center;
-    padding: 1rem;
-}
-
-/* Global Styles */
-body {
-    background-color: #121212;
-    color: #fff;
-}
-
-/* Header */
-header {
-    background-color: #1f1f1f;
-}
-
-nav ul li a {
-    color: #ccc;
-}
-
-.btn {
-    background-color: #5b38e6;
-    color: #fff;
-}
-
-.btn-outline {
-    background-color: transparent;
-    color: #ccc;
-    border: 1px solid #ccc;
-}
-
-/* Hero Section */
-.hero {
-    background-color: #1f1f1f;
-}
-
-/* Integrations Section */
-.integration-logos img {
-    filter: invert(1); /* Invert the color of the logos */
-}
-
-/* Services Section */
-.services {
-    background-color: #1f1f1f;
-}
-
-.card {
-    background-color: #2f2f2f;
-    box-shadow: 0 2px 4px rgba(255, 255, 255, 0.1);
-}
-
-/* Footer */
-footer {
-    background-color: #1f1f1f;
-}
-
-/* Table styles */
-table {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-th, td {
-    padding: 0.5rem;
-    text-align: left;
-    border-bottom: 1px solid #4d4d4d; /* Dark border color */
-}
-
-th {
-    background-color: #2d2d2d; /* Dark header background */
-    color: #e6e6e6; /* Light text color */
-}
-
-a {
-    color: #ffffff; /* White text color */
-    font-weight: bold; /* Bold text */
-    text-decoration: none; /* Remove underline */
-}
-
-a:hover {
-    color: #8e8e8e; /* Light gray color on hover */
-}
-/* Reset and global styles */
-body, h1, h2, h3, p, ul, li {
-    margin: 0;
-    padding: 0;
-    color: #e6e6e6;
-}
-
-body {
-    font-family: Arial, sans-serif;
-    line-height: 1.6;
-    background-color: #1a1a1a;
-}
-
-a {
-    color: #ffffff;
-    font-weight: bold;
-    text-decoration: none;
-}
-
-a:hover {
-    color: #cccccc;
-}
-
-/* Header styles */
-header {
-    background-color: #2d2d2d;
-    color: #e6e6e6;
-    padding: 1rem;
-}
-
-nav ul {
-    list-style-type: none;
-}
-
-nav ul li {
-    display: inline-block;
-    margin-right: 1rem;
-}
-
-/* Main content styles */
-main {
-    max-width: 800px;
-    margin: 2rem auto;
-    padding: 0 1rem;
-}
-
-/* Table styles */
-table {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-th, td {
-    padding: 0.5rem;
-    text-align: left;
-    border-bottom: 1px solid #4d4d4d;
-}
-
-th {
-    background-color: #2d2d2d;
-    color: #e6e6e6;
-}
-
-/* Form styles */
-form {
-    margin-bottom: 1rem;
-}
-
-label {
-    display: block;
-    margin-bottom: 0.5rem;
-}
-
-input, textarea {
-    padding: 0.5rem;
-    border: 1px solid #4d4d4d;
-    border-radius: 4px;
-    width: 100%;
-    box-sizing: border-box;
-    background-color: #1a1a1a;
-    color: #e6e6e6;
-}
-
-button {
-    background-color: #4d4d4d;
-    color: #e6e6e6;
-    padding: 0.5rem 1rem;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-button:hover {
-    background-color: #6d6d6d;
-}
-
-/* Responsive styles */
-@media (max-width: 768px) {
-    nav ul li {
-        display: block;
-        margin: 0.5rem 0;
-    }
-
-    main {
-        padding: 0;
-    }
-
-    table {
-        font-size: 0.8rem;
-    }
-}
-
-.hero-image img {
-    width: 400px;
+    max-width: 100%;
     height: auto;
 }
-.service-cards {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-  }
-  
-.card{
-    flex: 1 1 200px; /* Grow, shrink, and base width */
-    margin: 10px;
-    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+
+/* Footer Styles */
+footer {
+    background-color: #333;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
 }
-  
-  /* Responsive adjustments */
-  @media (max-width: 800px) {
-    .card {
-      flex: 1 1 100%; /* Full width on smaller screens */
-    }
-  }
-  
-  body {
-    background: linear-gradient(135deg, #343a40, #121212);
-  }
+
+/* Button Styles */
+.btn {
+    display: inline-block;
+    background-color: #333;
+    color: #fff;
+    text-decoration: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+}
