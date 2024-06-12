@@ -17,6 +17,8 @@ import json
 import matplotlib.pyplot as plt
 from werkzeug.utils import secure_filename
 plt.style.use('ggplot')
+import locale
+locale.setlocale(locale.LC_ALL, 'en_IN.utf8')
 
 app = Flask(__name__)
 app.secret_key = "your_secret_key"
@@ -42,8 +44,10 @@ def index():
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
+        global username
         username = request.form["username"]
         password = request.form["password"].encode('utf-8')
+
         
         # Check if the username exists in the DataFrame
         if username in users.index:
@@ -229,6 +233,8 @@ def blog():
 
 @app.route('/admin', methods=['GET', 'POST'])
 def new_post():
+    if username!='Admin':
+        return("<h1> Admin only write new post </h1>")
     posts = load_posts()
     if request.method == 'POST':
         title = request.form['title']
@@ -291,6 +297,30 @@ def portfolio():
     except Exception as e:
         print(e)
 
+def format_amount(amount):
+    return locale.format_string("%.*f", (2, amount), True)
+
+@app.route('/compound-interest', methods=['GET', 'POST'])
+def compound_interest():
+    if request.method == 'POST':
+        monthly_sip = float(request.form['monthly_sip'])
+        time_period = int(request.form['time_period'])
+        interest_rate = float(request.form['interest_rate']) / 100
+
+        chart_data = []
+        contributions_data = []
+        current_value = 0
+        for year in range(1, time_period + 1):
+            for month in range(12):
+                current_value += monthly_sip
+                current_value *= (1 + interest_rate / 12)
+            chart_data.append(current_value)
+            contributions_data.append(monthly_sip * year * 12)
+
+        return render_template('compound_interest.html', monthly_sip=format_amount(int(monthly_sip)), total_investment=format_amount(int(contributions_data[-1])),
+                               total_value=format_amount(int(chart_data[-1])), chart_data=chart_data, contributions_data=contributions_data, time_period=time_period)
+
+    return render_template('compound_interest.html')
 
 scheduler = BackgroundScheduler()
 scheduler.add_job(run, 'interval', minutes=280)

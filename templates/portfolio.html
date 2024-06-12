@@ -25,6 +25,9 @@ body {
 a:hover{
   color: #fff;
 }
+.ci{
+  display: inline;
+}
 
 
 /* Responsive Styles */
@@ -53,7 +56,9 @@ a:hover{
       </nav>
   </header>
     <div class="container">
-      <h1>Portfolio Allocation</h1>
+
+      <h1>AI Bases Personalized Portfolio</h1>
+      <p>Get personalized portfolio recommendations, For Longterm investment </p>
       <form method="post" action="{{ url_for('portfolio') }}">
         <div class="form-group">
           <label for="age">Age:</label>
@@ -68,8 +73,13 @@ a:hover{
             <option value="Conservative Investor ">Conservative Investor</option>
           </select>
         </div>
+        <center>
         <button type="submit" class="btn" >Get Allocation</button>
+        </center>
+     
       </form>
+  
+
       {% if allocation %}
       <h2>Allocation Results:</h2>
 
@@ -109,6 +119,9 @@ a:hover{
       <h3>CAGR: {{ cagr * 100 }}%</h3>
       {% endif %}
       {% endif %}
+      <br>
+ 
+        <center><a href="{{ url_for('compound_interest') }}"><button class="btn" >Calculate the Amount</button></a></div></center>
     </div>
   </body>
 </html>

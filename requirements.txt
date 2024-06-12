@@ -13,3 +13,4 @@ apscheduler
 plotly
 matplotlib
 werkzeug
+flask_login

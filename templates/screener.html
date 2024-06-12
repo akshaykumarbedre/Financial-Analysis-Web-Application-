@@ -66,11 +66,65 @@ tr:hover {
 table a{
     color:#333;
 }
+/* Styles for smaller screens */
+@media (max-width: 768px) {
+  .table-responsive {
+    overflow-x: auto;
+  }
+
+  #stockTable {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+  }
+
+  #stockTable th,
+  #stockTable td {
+    white-space: nowrap;
+  }
+}
 
     </style>
 
 </head>
 <body>
+    <script>
+        window.addEventListener('load', function() {
+  var tableResponsive = document.querySelector('.table-responsive');
+
+  // Function to handle scroll event
+  function handleScroll() {
+    var scrollLeft = tableResponsive.scrollLeft;
+    tableResponsive.scrollLeft = scrollLeft + 100; // Adjust the scroll amount as needed
+  }
+
+  // Add event listeners for left and right arrow keys
+  document.addEventListener('keydown', function(event) {
+    if (event.code === 'ArrowLeft') {
+      tableResponsive.scrollLeft -= 100; // Adjust the scroll amount as needed
+    } else if (event.code === 'ArrowRight') {
+      handleScroll();
+    }
+  });
+
+  // Add event listener for touch swipe
+  var touchStartX = 0;
+  var touchEndX = 0;
+
+  tableResponsive.addEventListener('touchstart', function(event) {
+    touchStartX = event.changedTouches[0].screenX;
+  });
+
+  tableResponsive.addEventListener('touchend', function(event) {
+    touchEndX = event.changedTouches[0].screenX;
+    if (touchEndX < touchStartX) {
+      handleScroll();
+    } else if (touchEndX > touchStartX) {
+      tableResponsive.scrollLeft -= 100; // Adjust the scroll amount as needed
+    }
+  });
+});
+    </script>
     <header>
         <nav>
             <a href="{{ url_for('index') }}" class="logo">InvestorEdge</a>
@@ -130,10 +184,12 @@ table a{
 
     <h3>Note:Click the stock to view the Fundamentals of the stock</h3>
    
-
+    <div class="table-responsive">
     <table id="stockTable">
+    
         {{ table|safe }}
     </table>
+    </div>
 
     <script>
         let sortDirection = 1;

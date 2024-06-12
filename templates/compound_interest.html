@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Compound Interest Calculator</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">  </head>
+  <body>
+    <header>
+      <nav>
+          <a href="{{ url_for('index') }}" class="logo">InvestorEdge</a>
+          <ul>
+              <li><a href="{{ url_for('screener') }}">Screen screener</a></li>
+              <li><a href="{{ url_for('portfolio') }}">Portfolio</a></li>
+          
+              <li> <a href="{{ url_for('visualization') }}">Visualization</a></li>
+              <li> <a href="{{ url_for('blog') }}">Blog</a></li>
+              <li>    <a href="{{ url_for('logout') }}"> {{ user }} Logout</a></li>
+  
+          </ul>
+      </nav>
+  </header>
+    <div class="container">
+      <h1 class="mt-5">Compound Interest Calculator</h1>
+      <form method="post" action="{{ url_for('compound_interest') }}">
+        <div class="form-group">
+          <label for="monthly_sip">Monthly SIP Amount:</label>
+          <input type="number" class="form-control" id="monthly_sip" name="monthly_sip" required>
+        </div>
+        <div class="form-group">
+          <label for="time_period">Time Period (in years):</label>
+          <input type="number" class="form-control" id="time_period" name="time_period" required>
+        </div>
+        <div class="form-group">
+          <label for="interest_rate">Interest Rate (%):</label>
+          <input type="text" class="form-control" id="interest_rate" name="interest_rate" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Calculate</button>
+      </form>
+
+      {% if monthly_sip %}
+      <div class="mt-5">
+        <h2>Results:</h2>
+        <h4><b>
+        <p>Monthly SIP: ₹{{monthly_sip}}</p>
+        <p>Total Investment: ₹{{ total_investment }}</p>
+        <p>Total Value (including interest): ₹{{ total_value}}</p></b>
+      </h4>
+      </div>
+
+      <div class="mt-5">
+        <h2>Investment Growth:</h2>
+        <canvas id="investmentChart" height="1000"></canvas>
+      </div>
+
+      <script>
+        var ctx = document.getElementById('investmentChart').getContext('2d');
+        var chart = new Chart(ctx, {
+          type: 'line',
+          data: {
+            labels: Array.from({length: {{ time_period }}}, (_, i) => (i + 1) + ' year'),
+            datasets: [{
+              label: 'Investment Value',
+              data: {{ chart_data|tojson }},
+              backgroundColor: 'rgba(54, 162, 235, 0.2)',
+              borderColor: 'rgba(54, 162, 235, 1)',
+              borderWidth: 5
+            }, {
+              label: 'Total Contributions',
+              data: {{ contributions_data|tojson }},
+              backgroundColor: 'rgba(255, 99, 132, 0.2)',
+              borderColor: 'rgba(255, 99, 132, 1)',
+              borderWidth: 5
+            }]
+          },
+          options: {
+            aspectRatio: 2, 
+            scales: {
+              y: {
+                beginAtZero: true,
+                ticks: {
+                  callback: function(value) {
+                    return '₹' + value.toFixed(2);
+                  }
+                }
+              }
+              
+            },
+            plugins: {
+              title: {
+                display: true,
+                text: 'Investment Growth Over Time'
+              }
+            }
+          }
+        });
+      </script>
+      
+      {% endif %}
+    </div>
+  </body>
+</html>
