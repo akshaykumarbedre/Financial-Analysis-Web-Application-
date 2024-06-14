@@ -258,10 +258,10 @@ with open(filename, 'rb') as file:
 
 avg_returns = {
     'Equity': 0.18,  # Equity mutual funds have provided annual returns of around 15%[^1^][3].
-    'Mutual Funds': 0.12,  # This remains the same as the average returns for mutual funds.
-    'Debt Funds': 0.09,  # Debt funds have average returns of approximately 9%[^1^][3].
-    'Sovereign Gold Bonds': 0.05,  # This remains the same as the average returns for sovereign gold bonds.
-    'Government Bonds': 0.06,  # This remains the same as the average returns for government bonds.
+    'Mutual Funds': 0.15,  # This remains the same as the average returns for mutual funds.
+    'Debt Funds': 0.07,  # Debt funds have average returns of approximately 9%[^1^][3].
+    'Sovereign Gold Bonds': 0.09,  # This remains the same as the average returns for sovereign gold bonds.
+    'Government Bonds': 0.07,  # This remains the same as the average returns for government bonds.
     'Public Provident Fund': 0.08,  # This remains the same as the average returns for PPF.
     'Fixed Deposits': 0.075  # This remains the same as the average returns for fixed deposits.
 }
