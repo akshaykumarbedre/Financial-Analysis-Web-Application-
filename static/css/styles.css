@@ -1,5 +1,5 @@
 /* General Styles */
-body {
+body,pre  {
     font-family: 'Roboto', sans-serif;
     margin: 0;
     padding: 0;
@@ -102,4 +102,48 @@ footer {
     text-decoration: none;
     padding: 10px 20px;
     border-radius: 4px;
+}
+.post-list {
+    margin-top: 30px;
+}
+
+.post-item {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+}
+
+.post-item h3 {
+    margin-top: 0;
+}
+
+.delete-form {
+    display: inline;
+}
+
+.delete-btn {
+    background-color: #ff4136;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 3px;
+}
+
+.flash-messages {
+    list-style-type: none;
+    padding: 0;
+}
+
+.flash-message {
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+
+.flash-success {
+    background-color: #4caf50;
+    color: white;
 }

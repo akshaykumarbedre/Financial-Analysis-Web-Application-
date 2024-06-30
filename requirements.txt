@@ -14,3 +14,4 @@ plotly
 matplotlib
 werkzeug
 flask_login
+flask_sqlalchemy

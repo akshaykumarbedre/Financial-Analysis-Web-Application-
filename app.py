@@ -19,23 +19,41 @@ from werkzeug.utils import secure_filename
 plt.style.use('ggplot')
 import locale
 locale.setlocale(locale.LC_ALL, 'en_IN.utf8')
+from datetime import datetime
+from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
 app.secret_key = "your_secret_key"
 
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users_post.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+db = SQLAlchemy(app)
+
+class User(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(80), unique=True, nullable=False)
+    password = db.Column(db.String(120), nullable=False)
+    name = db.Column(db.String(80))
+    phone = db.Column(db.String(20))
+
+    def __repr__(self):
+        return f'<User {self.username}>'
+    
+class BlogPost(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(200), nullable=False)
+    content = db.Column(db.Text, nullable=False)
+    image_filename = db.Column(db.String(255))
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+
+    def __repr__(self):
+        return f'<BlogPost {self.title}>'
+    
 df=pd.read_csv("nifty_data.csv")
 df.set_index('index',inplace=True)
 
 # User Authentication
-def load_users():
-    try:
-        users_df = pd.read_csv('users.csv', index_col='username')
-    except FileNotFoundError:
-        # If the file does not exist, create an empty DataFrame
-        users_df = pd.DataFrame(columns=['username', 'password', 'name', 'phone'])
-        users_df.set_index('username', inplace=True)
-    return users_df
-users = load_users()
 @app.route("/")
 def index():
     if "user" in session:
@@ -44,24 +62,17 @@ def index():
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
-        global username
         username = request.form["username"]
         password = request.form["password"].encode('utf-8')
 
+        user = User.query.filter_by(username=username).first()
+        if user and bcrypt.checkpw(password, user.password.encode('utf-8')):
+            session["user"] = username
+            return redirect(url_for("index"))
         
-        # Check if the username exists in the DataFrame
-        if username in users.index:
-            # Retrieve the hashed password from the DataFrame
-            hashed_password = users.loc[username, 'password'].encode('utf-8')
-            
-            # Use bcrypt to check if the provided password matches the hashed password
-            if bcrypt.checkpw(password, hashed_password):
-                session["user"] = username
-                return redirect(url_for("index"))
-        
-        # If authentication fails, return an error
         return render_template("login.html", error="Invalid username or password")
     return render_template("login.html")
+
 @app.route("/register", methods=["GET", "POST"])
 def register():
     if request.method == "POST":
@@ -70,21 +81,20 @@ def register():
         name = request.form["name"]
         phone = request.form["phone"]
         
-        if username in users.index:
+        existing_user = User.query.filter_by(username=username).first()
+        if existing_user:
             return render_template("register.html", error="Username already taken")
         
-        # Hash the password
         hashed_password = bcrypt.hashpw(password, bcrypt.gensalt())
         
-        # Store the new user details in the DataFrame
-        users.loc[username] = [hashed_password.decode('utf-8'), name, phone]
-        
-        # Save the DataFrame to CSV
-        users.to_csv('users.csv')
+        new_user = User(username=username, password=hashed_password.decode('utf-8'), name=name, phone=phone)
+        db.session.add(new_user)
+        db.session.commit()
         
         session["user"] = username
         return redirect(url_for("index"))
     return render_template("register.html")
+
 @app.route("/logout")
 def logout():
     # Remove the user from the session
@@ -208,49 +218,53 @@ def run(interval='1d'):
         compare_stock(144,day="15m")
         compare_stock(24, order=False,day="15m")
         compare_stock(144, order=False,day="15m")
-    
-app.config['UPLOAD_FOLDER'] = 'static/uploads'
-POSTS_FILE = 'posts.txt'
-
-def load_posts():
-    posts = []
-    if os.path.exists(POSTS_FILE):
-        with open(POSTS_FILE, 'r') as f:
-            for line in f:
-                title, content, image_filename = line.strip().split('|||')
-                posts.append({'title': title, 'content': content, 'image_filename': image_filename})
-    return posts
-
-def save_posts(posts):
-    with open(POSTS_FILE, 'w') as f:
-        for post in posts:
-            f.write(f"{post['title']}|||{post['content']}|||{post.get('image_filename', '')}\n")
+app.config['UPLOAD_FOLDER'] = os.path.join(app.root_path, 'static', 'uploads')
 
 @app.route('/blog')
 def blog():
-    posts = load_posts()
+    posts = BlogPost.query.order_by(BlogPost.created_at.desc()).all()
     return render_template('blog.html', posts=posts)
 
 @app.route('/admin', methods=['GET', 'POST'])
 def new_post():
-    if username!='Admin':
-        return("<h1> Admin only write new post </h1>")
-    posts = load_posts()
-    if request.method == 'POST':
-        title = request.form['title']
-        content = request.form['content']
-        image_file = request.files.get('image_file', None)
-        if image_file:
-            image_filename = secure_filename(image_file.filename)
-            image_file.save(os.path.join(app.config['UPLOAD_FOLDER'], image_filename))
-        else:
-            image_filename = ''
-        post = {'title': title, 'content': content, 'image_filename': image_filename}
-        posts.append(post)
-        save_posts(posts)
-        return redirect(url_for('blog'))
-    return render_template('new_post.html')
+    if 'user' not in session or session['user'] != 'Admin':
+        return "<h1>Admin only can access this page</h1>"
 
+    posts = BlogPost.query.order_by(BlogPost.created_at.desc()).all()
+
+    if request.method == 'POST':
+        if 'new_post' in request.form:
+            title = request.form['title']
+            content = request.form['content']
+            image_file = request.files.get('image_file', None)
+            
+            if image_file and image_file.filename != '':
+                image_filename = secure_filename(image_file.filename)
+                image_file.save(os.path.join(app.config['UPLOAD_FOLDER'], image_filename))
+            else:
+                image_filename = ''
+
+            new_post = BlogPost(title=title, content=content, image_filename=image_filename)
+            db.session.add(new_post)
+            db.session.commit()
+           
+        
+        elif 'delete_post' in request.form:
+            post_id = request.form['delete_post']
+            post = BlogPost.query.get_or_404(post_id)
+            
+            if post.image_filename:
+                image_path = os.path.join(app.config['UPLOAD_FOLDER'], post.image_filename)
+                if os.path.exists(image_path):
+                    os.remove(image_path)
+            
+            db.session.delete(post)
+            db.session.commit()
+            
+
+        return redirect(url_for('new_post'))
+
+    return render_template('new_post.html', posts=posts)
 # Load the model
 filename = 'portfolio.pkl'
 with open(filename, 'rb') as file:
@@ -330,4 +344,6 @@ scheduler.start()
 #run()
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0',debug=True)
+    with app.app_context():
+        db.create_all()
+    app.run(host='0.0.0.0', debug=True)

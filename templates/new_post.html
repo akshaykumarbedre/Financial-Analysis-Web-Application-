@@ -3,8 +3,7 @@
 <head>
     <title>New Post</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
-    <style>
-   
+    <style> 
  
 
         h1 {
@@ -40,6 +39,8 @@
             margin-bottom: 15px;
         }
 
+    </style>
+
 
 
     </style>
@@ -59,10 +60,22 @@
             </ul>
         </nav>
     </header>
-    <h1>Admin</h1>
-    <h1>New Post</h1>
+    
+    <h1>Admin Dashboard</h1>
 
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <ul class="flash-messages">
+                {% for category, message in messages %}
+                    <li class="flash-message flash-{{ category }}">{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+
+    <h2>New Post</h2>
     <form method="POST" action="{{ url_for('new_post') }}" enctype="multipart/form-data">
+        <input type="hidden" name="new_post" value="1">
         <label for="title">Title:</label>
         <input type="text" id="title" name="title" required>
         <br>
@@ -74,5 +87,19 @@
         <br>
         <input type="submit" value="Submit" class="btn">
     </form>
+
+    <div class="post-list">
+        <h2>Existing Posts</h2>
+        {% for post in posts %}
+            <div class="post-item">
+                <h3>{{ post.title }}</h3>
+                <p>Created on: {{ post.created_at.strftime('%Y-%m-%d %H:%M:%S') }}</p>
+                <form class="delete-form" method="POST" action="{{ url_for('new_post') }}" onsubmit="return confirm('Are you sure you want to delete this post?');">
+                    <input type="hidden" name="delete_post" value="{{ post.id }}">
+                    <button type="submit" class="delete-btn">Delete</button>
+                </form>
+            </div>
+        {% endfor %}
+    </div>
 </body>
 </html>

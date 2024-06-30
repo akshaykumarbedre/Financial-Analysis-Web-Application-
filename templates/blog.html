@@ -65,11 +65,12 @@ footer {
     <main>
         {% for post in posts %}
         <article>
-            <h2>{{ post['title'] }}</h2>
-            <p>{{ post['content'] }}</p>
-            {% if post['image_filename'] %}
-            <img src="{{ url_for('static', filename='uploads/' + post['image_filename']) }}" alt="Post Image">
-            {% endif %}
+          <h2>{{ post.title }}</h2>
+          <pre wrap="soft">{{ post.content }}</pre>
+          {% if post.image_filename %}
+              <img src="{{ url_for('static', filename='uploads/' + post.image_filename) }}" alt="{{ post.title }}">
+          {% endif %}
+          <p>Posted on: {{ post.created_at.strftime('%Y-%m-%d %H:%M:%S') }}</p>
         </article>
         {% endfor %}
     </main>
