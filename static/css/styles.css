@@ -147,3 +147,10 @@ footer {
     background-color: #4caf50;
     color: white;
 }
+nav ul li a ,nav a{
+
+
+    font-weight: bold;
+
+   
+  }

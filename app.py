@@ -11,7 +11,7 @@ import pandas as pd
 import yfinance as yf
 import seaborn as sns
 import pickle
-import io,os
+import io,os,re
 import base64
 import json
 import matplotlib.pyplot as plt
@@ -73,28 +73,36 @@ def login():
         return render_template("login.html", error="Invalid username or password")
     return render_template("login.html")
 
+def validate_password(password):
+    # At least 8 characters long, 1 digit, 1 uppercase, 1 lowercase, 1 special character
+    regex = r"^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+\-=\[\]{};:'\",.<>?]).{8,}$"
+    return re.match(regex, password) is not None
+
 @app.route("/register", methods=["GET", "POST"])
 def register():
     if request.method == "POST":
         username = request.form["username"]
-        password = request.form["password"].encode('utf-8')
+        password = request.form["password"]
         name = request.form["name"]
         phone = request.form["phone"]
-        
+
         existing_user = User.query.filter_by(username=username).first()
         if existing_user:
             return render_template("register.html", error="Username already taken")
-        
-        hashed_password = bcrypt.hashpw(password, bcrypt.gensalt())
-        
+
+        if not validate_password(password):
+            return render_template("register.html", error="Password does not meet requirements")
+
+        hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
+
         new_user = User(username=username, password=hashed_password.decode('utf-8'), name=name, phone=phone)
         db.session.add(new_user)
         db.session.commit()
-        
+
         session["user"] = username
         return redirect(url_for("index"))
-    return render_template("register.html")
 
+    return render_template("register.html")
 @app.route("/logout")
 def logout():
     # Remove the user from the session

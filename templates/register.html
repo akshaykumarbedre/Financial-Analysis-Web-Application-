@@ -5,9 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Register</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <style>
-    
-  </style>
 </head>
 <body>
   <div class="min-h-screen flex items-center justify-center bg-zinc-100 dark:bg-zinc-900">
@@ -17,14 +14,13 @@
       </div>
       <div class="w-full md:w-1/2 p-8">
         <div class="flex items-center mb-6">
-          
           <h1 class="text-2xl font-bold text-zinc-800 dark:text-zinc-100">InvestorEdge</h1>
         </div>
-        <h2 class="text-xl font-semibold text-zinc-800 dark:text-zinc-100 mb-4">Start Your Investment Jornry</h2>
+        <h2 class="text-xl font-semibold text-zinc-800 dark:text-zinc-100 mb-4">Start Your Investment Journey</h2>
         {% if error %}
         <p class="text-red-500 mb-4">{{ error }}</p>
         {% endif %}
-        <form method="post">
+        <form method="post" id="registerForm">
           <div class="flex items-center border-b border-zinc-300 dark:border-zinc-700 py-2 mb-4">
             <input type="text" name="name" placeholder="Name" class="appearance-none bg-transparent border-none w-full text-zinc-700 dark:text-zinc-300 mr-3 py-1 px-2 leading-tight focus:outline-none" required>
           </div>
@@ -35,15 +31,47 @@
             <input type="text" name="username" placeholder="Username" class="appearance-none bg-transparent border-none w-full text-zinc-700 dark:text-zinc-300 mr-3 py-1 px-2 leading-tight focus:outline-none" required>
           </div>
           <div class="flex items-center border-b border-zinc-300 dark:border-zinc-700 py-2 mb-4">
-            <input type="password" name="password" placeholder="Password" class="appearance-none bg-transparent border-none w-full text-zinc-700 dark:text-zinc-300 mr-3 py-1 px-2 leading-tight focus:outline-none" required pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+\-=\[\]{};:\\|,.\/?]).{8,}$" title="Must contain at least one number, one uppercase letter, one lowercase letter, one special character, and be at least 8 characters long">
+            <input type="password" name="password" id="password" placeholder="Password" class="appearance-none bg-transparent border-none w-full text-zinc-700 dark:text-zinc-300 mr-3 py-1 px-2 leading-tight focus:outline-none" required>
           </div>
+          <p id="passwordError" class="text-red-500 mb-4 hidden"></p>
           <button class="bg-gray-800 hover:bg-gray-900 text-white font-bold py-2 px-4 rounded-full w-full mb-4" type="submit">Register</button>
         </form>
         <div class="text-center text-zinc-600 dark:text-zinc-400 mb-4">OR</div>
-
         <p class="text-zinc-600 dark:text-zinc-400 mt-4">Already have an account? <a href="{{ url_for('login') }}" class="text-pink-500 hover:text-pink-700">Login</a></p>
       </div>
     </div>
   </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const form = document.getElementById('registerForm');
+      const passwordInput = document.getElementById('password');
+      const passwordError = document.getElementById('passwordError');
+
+      function validatePassword(password) {
+        const regex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+\-=\[\]{};:'",.<>?]).{8,}$/;
+        return regex.test(password);
+      }
+
+      form.addEventListener('submit', function(e) {
+        if (!validatePassword(passwordInput.value)) {
+          e.preventDefault();
+          passwordError.textContent = 'Password must contain at least one number, one uppercase letter, one lowercase letter, one special character, and be at least 8 characters long';
+          passwordError.classList.remove('hidden');
+        } else {
+          passwordError.classList.add('hidden');
+        }
+      });
+
+      passwordInput.addEventListener('input', function() {
+        if (!validatePassword(this.value)) {
+          passwordError.textContent = 'Password must contain at least one number, one uppercase letter, one lowercase letter, one special character, and be at least 8 characters long';
+          passwordError.classList.remove('hidden');
+        } else {
+          passwordError.classList.add('hidden');
+        }
+      });
+    });
+  </script>
 </body>
 </html>
