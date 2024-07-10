@@ -153,17 +153,17 @@ table a{
     <h1>Stock Screeners for Nifty 200 Stocks</h1>
     <p> Stay ahead in the market with our platform’s real-time stock updates every 5 hours. Keep your investment strategy sharp with the latest data on the Nifty 200 and more. We’ve got the data; you make the decisions.</p>
            <!-- New search bar -->
-           <div class="search-container">
-            <form action="{{ url_for('screener') }}" method="get">
-                <input type="text" list="companies" name="search" placeholder="Search for a company...">
-                <datalist id="companies">
-                    {% for company in companies %}
-                    <option value="{{ company }}">
-                    {% endfor %}
-                </datalist>
-                <button type="submit">Search</button>
-            </form>
-        </div>
+       <div class="search-container">
+        <form action="{{ url_for('screener') }}" method="get">
+            <input type="text" list="companies" name="search" placeholder="Search for a company...">
+            <datalist id="companies">
+                {% for company in companies %}
+                <option value="{{ company }}">
+                {% endfor %}
+            </datalist>
+            <button type="submit">Search</button>
+        </form>
+    </div>
     <div class="stock-screener">
         <h2>Stock Screener Guidelines</h2>
         <div class="indicator">

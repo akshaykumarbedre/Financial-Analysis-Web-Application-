@@ -362,7 +362,7 @@ scheduler = BackgroundScheduler()
 scheduler.add_job(run, 'interval', minutes=60)
 
 scheduler.start()
-
+#run("15m")
 #run()
 
 if __name__ == "__main__":
