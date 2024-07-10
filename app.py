@@ -158,16 +158,41 @@ def compare_stock(num, order=True,day="1d",num_stock=5):
     sorted_df.to_csv(os.path.join('data',f"data{num}{order}.csv"))
 
     return pd.DataFrame(sorted_df.iloc[:,1:num_stock])
-def make_clickable(val):
-    return f'<a href="https://www.google.com/finance/quote/{df[df["Company Name"]==val]["Symbol"].str.replace(".NS","").to_list()[0]}:NSE" target="_blank">{val}</a>'
+
 # Stock Recommendations
 @app.route("/screener", methods=["GET", "POST"])
 def screener():
-    df=pd.read_csv(os.path.join('data',"Nifty_Result1d.csv"))
-    df['Company Name'] = df['Company Name'].apply(make_clickable)
+    df = pd.read_csv(os.path.join('data', "Nifty_Result1d.csv"))
+    df1 = pd.read_csv(os.path.join("nifty_data.csv"))
+    
+    # Get unique company names for the dropdown
+    companies = df['Company Name'].unique().tolist()
 
-    html_table = df.to_html(classes="sortable-table",escape=False, index=False)
-    return render_template("screener.html", table=html_table)
+    # Handle search
+    search_query = request.args.get('search', '')
+    if search_query:
+        matched_row = df1[df1['Company Name'] == search_query]
+     
+        if not matched_row.empty:
+            if 'Symbol' in df1.columns:
+                symbol = matched_row['Symbol'].iloc[0].replace('.NS', '')
+               
+            return redirect(f'https://www.google.com/finance/quote/{symbol}:NSE')
+
+    # Apply make_clickable function
+    df['Company Name'] = df.apply(lambda row: make_clickable(row), axis=1)
+    
+    html_table = df.to_html(classes="sortable-table", escape=False, index=False)
+    return render_template("screener.html", table=html_table, companies=companies)
+
+def make_clickable(row):
+    company_name = row['Company Name']
+    if 'Symbol' in row.index:
+        symbol = row['Symbol'].replace('.NS', '')
+    else:
+        symbol = company_name.replace(' ', '%20')
+    return f'<a href="https://www.google.com/finance/quote/{symbol}:NSE" target="_blank">{company_name}</a>'
+
 def indicater(df):
         df['MACD hist']=ta.trend.macd_diff(df['Close'])
         df['ADX']=ta.trend.adx(df["High"], df["Low"], df["Close"], window=14)
@@ -334,10 +359,10 @@ def compound_interest():
     return render_template('compound_interest.html')
 
 scheduler = BackgroundScheduler()
-scheduler.add_job(run, 'interval', minutes=280)
-scheduler.add_job(run, 'interval', minutes=15, args=["15m"])
+scheduler.add_job(run, 'interval', minutes=60)
+
 scheduler.start()
-#run("15m")
+
 #run()
 
 if __name__ == "__main__":

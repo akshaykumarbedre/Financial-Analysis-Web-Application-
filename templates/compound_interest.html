@@ -14,19 +14,21 @@
     <title>Compound Interest Calculator</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">  </head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+  
+  </head>
   <body>
     <header>
       <nav>
           <a href="{{ url_for('index') }}" class="logo">InvestorEdge</a>
           <ul>
-            <li><a href="{{ url_for('portfolio') }}">Portfolio</a></li>
-            <li><a href="{{ url_for('compound_interest') }}">CI Calculator</a></li>
+              <li><a href="{{ url_for('portfolio') }}">Portfolio</a></li>
+              <li><a href="{{ url_for('compound_interest') }}">CI Calculator</a></li>
               <li><a href="{{ url_for('screener') }}">Screen screener</a></li>
           
               <li> <a href="{{ url_for('visualization') }}">Visualization</a></li>
               <li> <a href="{{ url_for('blog') }}">Blog</a></li>
-              <li>    <a href="{{ url_for('logout') }}"> {{ user }} Logout</a></li>
+              <li>    <a href="{{ url_for('logout') }}">  Logout</a></li>
   
           </ul>
       </nav>

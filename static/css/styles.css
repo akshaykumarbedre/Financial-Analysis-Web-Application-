@@ -154,3 +154,21 @@ nav ul li a ,nav a{
 
    
   }
+  .search-container {
+    margin: 20px;
+    text-align: center;
+}
+.search-container input[type="text"] {
+    width: 300px;
+    padding: 10px;
+    font-size: 16px;
+}
+.search-container button {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: #333;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+}
