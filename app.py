@@ -123,18 +123,7 @@ def visualization():
 
     # Render template with plot URLs
     return render_template('visualization.html', plot_url_20=plot_url_20, plot_url_240=plot_url_240, plot_url_20N=plot_url_20n, plot_url_240N=plot_url_240n,plot_url_1200=plot_url_1200)
-# @app.route("/visualization_intraday", methods=["GET", "POST"])
-# def visualization_intraday():
-#     # Generate plots
-#     plot_url_20 = generate_plot(pd.read_csv(os.path.join('data',"data24True.csv")), 'Todays Top Performers of Day')
-#     plot_url_240 = generate_plot(pd.read_csv(os.path.join('data',"data144True.csv")), 'Top Performers of the Week')
-#     plot_url_20n = generate_plot(pd.read_csv(os.path.join('data',"data24False.csv")), 'Top Loser of the Day')
-#     plot_url_240n = generate_plot(pd.read_csv(os.path.join('data',"data144False.csv")), 'Top Loser of the Week')
 
-#     # Render template with plot URLs
-#     return render_template('visualization_intraday.html', plot_url_20=plot_url_20, plot_url_240=plot_url_240, plot_url_20N=plot_url_20n, plot_url_240N=plot_url_240n)
-
-    # Function to generate plots
 def generate_plot(dataframe, title,no_of_stock=6):
     fig, ax = plt.subplots()
     for i in range(1, no_of_stock+1):
