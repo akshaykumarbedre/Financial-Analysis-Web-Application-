@@ -178,7 +178,6 @@ def screener():
                 symbol = matched_row['Symbol'].iloc[0].replace('.NS', '')
                
             return redirect(f'https://www.google.com/finance/quote/{symbol}:NSE')
-    print(df)
     
     html_table = df.to_html(classes="sortable-table",escape=False, index=False)
     return render_template("screener.html", table=html_table, companies=companies)

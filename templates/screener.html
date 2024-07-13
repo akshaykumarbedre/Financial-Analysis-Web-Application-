@@ -76,6 +76,7 @@ tr:hover {
 table a{
     color:#333;
 }
+
 /* Styles for smaller screens */
 @media (max-width: 768px) {
   .table-responsive {
@@ -98,43 +99,8 @@ table a{
 
 </head>
 <body>
-    <script>
-        window.addEventListener('load', function() {
-  var tableResponsive = document.querySelector('.table-responsive');
-
-  // Function to handle scroll event
-  function handleScroll() {
-    var scrollLeft = tableResponsive.scrollLeft;
-    tableResponsive.scrollLeft = scrollLeft + 100; // Adjust the scroll amount as needed
-  }
-
-  // Add event listeners for left and right arrow keys
-  document.addEventListener('keydown', function(event) {
-    if (event.code === 'ArrowLeft') {
-      tableResponsive.scrollLeft -= 100; // Adjust the scroll amount as needed
-    } else if (event.code === 'ArrowRight') {
-      handleScroll();
-    }
-  });
-
-  // Add event listener for touch swipe
-  var touchStartX = 0;
-  var touchEndX = 0;
-
-  tableResponsive.addEventListener('touchstart', function(event) {
-    touchStartX = event.changedTouches[0].screenX;
-  });
-
-  tableResponsive.addEventListener('touchend', function(event) {
-    touchEndX = event.changedTouches[0].screenX;
-    if (touchEndX < touchStartX) {
-      handleScroll();
-    } else if (touchEndX > touchStartX) {
-      tableResponsive.scrollLeft -= 100; // Adjust the scroll amount as needed
-    }
-  });
-});
-    </script>
+  
+    
     <header>
         <nav>
             <a href="{{ url_for('index') }}" class="logo">InvestorEdge</a>
@@ -207,42 +173,11 @@ table a{
 
     <h3>Note:Click the stock to view the Fundamentals of the stock</h3>
 
-
-    
-   
-    <div class="table-responsive">
-        <table id="stockTable" class="sortable-table">
-            {{ table|safe }}
-        </table>
-    </div>
+    <table id="stockTable">
+        {{ table|safe }}
+    </table>
 
     <script>
-        let sortDirection = 1;
-
-        function sortTable(columnIndex) {
-            const table = document.querySelector('.sortable-table');
-            const rows = Array.from(table.rows).slice(1); // Skip the header row
-
-            rows.sort((a, b) => {
-                const aValue = a.cells[columnIndex].innerText.toLowerCase();
-                const bValue = b.cells[columnIndex].innerText.toLowerCase();
-
-                if (aValue < bValue) return -sortDirection;
-                if (aValue > bValue) return sortDirection;
-                return 0;
-            });
-
-            sortDirection = -sortDirection; // Change the sort direction
-
-            const tableBody = table.tBodies[0];
-            tableBody.innerHTML = "";
-            rows.forEach(row => tableBody.appendChild(row));
-        }
-
-        const tableHeaders = document.querySelectorAll('.sortable-table th');
-        tableHeaders.forEach((header, index) => {
-            header.addEventListener('click', () => sortTable(index));
-        });
         function handleSearch(event) {
             event.preventDefault();
             const searchTerm = document.querySelector('input[name="search"]').value.toLowerCase();
@@ -260,8 +195,86 @@ table a{
         }
 
         // Add event listener for search form
-    </script>
-    
+        const searchForm = document.querySelector('.search-container form');
+        if (searchForm) {
+            searchForm.addEventListener('submit', handleSearch);
+        }
 
+        document.addEventListener('DOMContentLoaded', function() {
+            const table = document.getElementById('stockTable');
+            const headers = table.querySelectorAll('th');
+
+            headers.forEach(header => {
+                header.addEventListener('click', () => {
+                    const column = header.cellIndex;
+                    const rows = Array.from(table.querySelectorAll('tr')).slice(1); // Exclude header row
+                    
+                    rows.sort((a, b) => {
+                        const aValue = a.cells[column].textContent.trim();
+                        const bValue = b.cells[column].textContent.trim();
+                        
+                        // Ensure numeric values are compared correctly
+                        const aNum = parseFloat(aValue.replace(/,/g, ''));
+                        const bNum = parseFloat(bValue.replace(/,/g, ''));
+
+                        if (!isNaN(aNum) && !isNaN(bNum)) {
+                            return aNum - bNum;
+                        } else {
+                            return aValue.localeCompare(bValue);
+                        }
+                    });
+
+                    // Toggle sort direction
+                    if (header.classList.contains('asc')) {
+                        rows.reverse();
+                        header.classList.remove('asc');
+                        header.classList.add('desc');
+                    } else {
+                        header.classList.remove('desc');
+                        header.classList.add('asc');
+                    }
+
+                    // Remove sort classes from other headers
+                    headers.forEach(h => {
+                        if (h !== header) {
+                            h.classList.remove('asc', 'desc');
+                        }
+                    });
+
+                    // Reorder table rows
+                    rows.forEach(row => table.appendChild(row));
+                });
+            });
+        });
+
+        let sortDirection = 1;
+
+        function sortTable(columnIndex) {
+            const table = document.querySelector('.sortable-table');
+            const rows = Array.from(table.rows).slice(1); // Skip the header row
+
+            rows.sort((a, b) => {
+                const aValue = a.cells[columnIndex].innerText.toLowerCase();
+                const bValue = b.cells[columnIndex].innerText.toLowerCase();
+
+                if (!isNaN(parseFloat(aValue)) && !isNaN(parseFloat(bValue))) {
+                    return (parseFloat(aValue) - parseFloat(bValue)) * sortDirection;
+                } else {
+                    return aValue.localeCompare(bValue) * sortDirection;
+                }
+            });
+
+            sortDirection = -sortDirection; // Change the sort direction
+
+            const tableBody = table.tBodies[0];
+            tableBody.innerHTML = "";
+            rows.forEach(row => tableBody.appendChild(row));
+        }
+
+        const tableHeaders = document.querySelectorAll('.sortable-table th');
+        tableHeaders.forEach((header, index) => {
+            header.addEventListener('click', () => sortTable(index));
+        });
+    </script>
 </body>
 </html>
