@@ -96,7 +96,6 @@ table a{
 }
 
     </style>
-
 </head>
 <body>
   
@@ -121,14 +120,15 @@ table a{
            <!-- New search bar -->
        <div class="search-container">
         <form action="{{ url_for('screener') }}" method="get">
-            <input type="text" list="companies" name="search" placeholder="Search for a company...">
-            <datalist id="companies">
-                {% for company in companies %}
-                <option value="{{ company }}">
-                {% endfor %}
-            </datalist>
-            <button type="submit">Search</button>
-        </form>
+            <form action="{{ url_for('screener') }}" method="get">
+                <input type="text" list="companies" name="search" placeholder="Search for a company...">
+                <datalist id="companies">
+                    {% for company in companies %}
+                    <option value="{{ company }}">
+                    {% endfor %}
+                </datalist>
+                <button type="submit">Search</button>
+            </form>
     </div>
     <div class="stock-screener">
         <h2>Stock Screener Guidelines</h2>
@@ -178,21 +178,7 @@ table a{
     </table>
 
     <script>
-        function handleSearch(event) {
-            event.preventDefault();
-            const searchTerm = document.querySelector('input[name="search"]').value.toLowerCase();
-            const table = document.getElementById('stockTable');
-            const rows = table.getElementsByTagName('tr');
-
-            for (let i = 1; i < rows.length; i++) {
-                const companyName = rows[i].getElementsByTagName('td')[0].textContent.toLowerCase();
-                if (companyName.includes(searchTerm)) {
-                    rows[i].style.display = '';
-                } else {
-                    rows[i].style.display = 'none';
-                }
-            }
-        }
+  
 
         // Add event listener for search form
         const searchForm = document.querySelector('.search-container form');
