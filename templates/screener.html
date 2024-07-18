@@ -96,6 +96,7 @@ table a{
 }
 
     </style>
+
 </head>
 <body>
   
@@ -120,15 +121,14 @@ table a{
            <!-- New search bar -->
        <div class="search-container">
         <form action="{{ url_for('screener') }}" method="get">
-            <form action="{{ url_for('screener') }}" method="get">
-                <input type="text" list="companies" name="search" placeholder="Search for a company...">
-                <datalist id="companies">
-                    {% for company in companies %}
-                    <option value="{{ company }}">
-                    {% endfor %}
-                </datalist>
-                <button type="submit">Search</button>
-            </form>
+            <input type="text" list="companies" name="search" placeholder="Search for a company...">
+            <datalist id="companies">
+                {% for company in companies %}
+                <option value="{{ company }}">
+                {% endfor %}
+            </datalist>
+            <button type="submit">Search</button>
+        </form>
     </div>
     <div class="stock-screener">
         <h2>Stock Screener Guidelines</h2>
@@ -171,20 +171,15 @@ table a{
         </div>
     </div>
 
-    <h3>Note:Click the stock to view the Fundamentals of the stock</h3>
+
 
     <table id="stockTable">
         {{ table|safe }}
     </table>
 
     <script>
-  
 
-        // Add event listener for search form
-        const searchForm = document.querySelector('.search-container form');
-        if (searchForm) {
-            searchForm.addEventListener('submit', handleSearch);
-        }
+
 
         document.addEventListener('DOMContentLoaded', function() {
             const table = document.getElementById('stockTable');

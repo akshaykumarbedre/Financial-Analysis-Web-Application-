@@ -190,7 +190,7 @@ def indicater(df):
         df["EMA 200"] = ta.trend.EMAIndicator(df['Close'], window=200, fillna=False).ema_indicator()
         df['RSI']= ta.momentum.rsi(df["Close"], window=14)
         df['Stochastic Oscillator']=ta.momentum.stoch(df["High"], df["Low"], df["Close"], window=14, smooth_window=3)
-        df['MACD hist sloap*']=df['MACD hist'].diff()
+        df['MACD hist sloap*']=(df['MACD hist'].diff()/df['Close'])
         df["EMA 200 Sloap"]=df["EMA 200"].diff()/df['Close']
         return df
 def run(interval='1d'):
