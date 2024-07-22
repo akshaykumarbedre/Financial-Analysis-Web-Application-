@@ -13,48 +13,84 @@
 
     <title>My Blog</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
- 
     <style>
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-article {
-  background-color: #fff;
-  padding: 1.5rem;
-  margin-bottom: 2rem;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      
+      body {
+        font-family: Arial, sans-serif;
+        line-height: 1.6;
+        color: #333;
+      }
+      
+      main {
+        max-width: 90%;
+        margin: 0 auto;
+        padding: 20px;
+      }
+      
+      article {
+        background-color: #fff;
+        padding: 2rem;
+        margin-bottom: 2rem;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        border-radius: 5px;
+        display: flex;
+        flex-wrap: wrap;
+      }
+      
+      article h2 {
+        width: 100%;
+        margin-bottom: 1rem;
+        color: #333;
+        font-size: 1.8rem;
+      }
+      
+      .article-content {
+        flex: 1;
+        min-width: 60%;
+        padding-right: 2rem;
+      }
+      
+      article pre {
+        white-space: pre-wrap;
+        word-wrap: break-word;
+        font-family: Arial, sans-serif;
+        margin-bottom: 1rem;
+        line-height: 1.8;
+      }
+      
+      article img {
+  width: 400px;  /* Fixed width */
+  height: 300px; /* Fixed height */
+  object-fit: cover; /* This will crop the image to fit the dimensions while maintaining aspect ratio */
   border-radius: 5px;
 }
-
-article h2 {
-  margin-bottom: 1rem;
-  color: #333;
-  font-size: 1.8rem;
-}
-
-article p {
-  margin-bottom: 1rem;
-  line-height: 1.8;
-}
-
-article img {
-  max-width: 100%;
-  width:  35em;
-  margin-top: 1rem;
-  border-radius: 5px;
-}
-
-footer {
-  background-color: #333;
-  color: #fff;
-  text-align: center;
-  padding: 1rem;
-  font-size: 0.9rem;
-}
-    </style>
+      
+      article img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 5px;
+      }
+      
+      article p {
+        width: 100%;
+        margin-top: 1rem;
+        font-size: 0.9rem;
+        color: #666;
+      }
+      
+      footer {
+        background-color: #333;
+        color: #fff;
+        text-align: center;
+        padding: 1rem;
+        font-size: 0.9rem;
+      }
+      </style>
 </head>
 <body>    <header>
     <nav>
@@ -62,7 +98,7 @@ footer {
         <ul>
           <li><a href="{{ url_for('portfolio') }}">Portfolio</a></li>
           <li><a href="{{ url_for('compound_interest') }}">CI Calculator</a></li>
-            <li><a href="{{ url_for('screener') }}">Screen screener</a></li>
+            <li><a href="{{ url_for('screener') }}">Stock Screener</a></li>
         
             <li> <a href="{{ url_for('visualization') }}">Visualization</a></li>
             <li> <a href="{{ url_for('blog') }}">Blog</a></li>
@@ -73,18 +109,22 @@ footer {
 </header>
 
 
-    <main>
-        {% for post in posts %}
-        <article>
-          <h2>{{ post.title }}</h2>
-          <pre wrap="soft">{{ post.content }}</pre>
-          {% if post.image_filename %}
-              <img src="{{ url_for('static', filename='uploads/' + post.image_filename) }}" alt="{{ post.title }}">
-          {% endif %}
-          <p>Posted on: {{ post.created_at.strftime('%Y-%m-%d %H:%M:%S') }}</p>
-        </article>
-        {% endfor %}
-    </main>
+<main>
+  {% for post in posts %}
+  <article>
+    <h2>{{ post.title }}</h2>
+    <div class="article-content">
+      <pre wrap="soft">{{ post.content }}</pre>
+    </div>
+    {% if post.image_filename %}
+    <div class="article-image">
+      <img src="{{ url_for('static', filename='uploads/' + post.image_filename) }}" alt="{{ post.title }}">
+    </div>
+    {% endif %}
+    <p>Posted on: {{ post.created_at.strftime('%Y-%m-%d %H:%M:%S') }}</p>
+  </article>
+  {% endfor %}
+</main>
     
 
     <footer>

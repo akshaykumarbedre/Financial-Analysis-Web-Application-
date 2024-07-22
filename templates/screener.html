@@ -107,7 +107,7 @@ table a{
             <ul>
                 <li><a href="{{ url_for('portfolio') }}">Portfolio</a></li>
                 <li><a href="{{ url_for('compound_interest') }}">CI Calculator</a></li>
-                <li><a href="{{ url_for('screener') }}">Screen screener</a></li>
+                <li><a href="{{ url_for('screener') }}">Stock Screener</a></li>
             
                 <li> <a href="{{ url_for('visualization') }}">Visualization</a></li>
                 <li> <a href="{{ url_for('blog') }}">Blog</a></li>
@@ -116,8 +116,8 @@ table a{
             </ul>
         </nav>
     </header>
-    <h1>Stock Screeners for Nifty 200 Stocks</h1>
-    <p> Stay ahead in the market with our platform’s real-time stock updates every 5 hours. Keep your investment strategy sharp with the latest data on the Nifty 200 and more. We’ve got the data; you make the decisions.</p>
+    <h1>Smart Stock Screening for Nifty 200</h1>
+    <p>Empower your investment decisions with our advanced stock screening tool. Updated every 5 hours, our platform provides real-time insights into Nifty 200 stocks and beyond. Leverage cutting-edge data to refine your strategy and stay ahead in the dynamic world of investing.</p>
            <!-- New search bar -->
        <div class="search-container">
         <form action="{{ url_for('screener') }}" method="get">
@@ -131,42 +131,53 @@ table a{
         </form>
     </div>
     <div class="stock-screener">
-        <h2>Stock Screener Guidelines</h2>
+        <h2>Technical Indicator Guidelines</h2>
+        
         <div class="indicator">
             <h3>Relative Strength Index (RSI)</h3>
+            <p>It's like a speedometer for stock price momentum.</p>
             <ul>
-                <li>Look for stocks with RSI values below 70 (indicating they are not overbought) but above 30 (indicating they are not oversold).</li>
-                <li>RSI values around 50 are considered neutral.</li>
-                <li>Higher RSI values suggest bullish momentum, while lower values suggest bearish momentum.</li>
+                <li>30-70: Normal range</li>
+                <li>Above 70: Stock might be moving up too fast</li>
+                <li>Below 30: Stock might be falling too quickly</li>
+                <li>Around 50: Neutral, no strong movement</li>
             </ul>
         </div>
+        
         <div class="indicator">
             <h3>Moving Average Convergence Divergence (MACD)</h3>
+            <p>It's like a compass showing which direction the stock is moving.</p>
             <ul>
-                <li>Positive MACD histogram values indicate bullish momentum.</li>
-                <li>Negative MACD histogram values indicate bearish momentum.</li>
-                <li>Consider stocks with rising MACD histogram values.</li>
+                <li>Positive values: Stock is likely going up</li>
+                <li>Negative values: Stock is likely going down</li>
+                <li>Rising values: Momentum is increasing</li>
             </ul>
         </div>
+        
         <div class="indicator">
-            <h3>ADX (Average Directional Index)</h3>
+            <h3>Average Directional Index (ADX)</h3>
+            <p>It's like a strength meter for stock trends.</p>
             <ul>
-                <li>ADX values above 25 suggest a strong trend (either bullish or bearish).</li>
-                <li>Look for stocks with rising ADX values, indicating a strengthening trend.</li>
+                <li>Above 25: There's a strong trend (either up or down)</li>
+                <li>Rising values: The trend is getting stronger</li>
             </ul>
         </div>
+        
         <div class="indicator">
-            <h3>ATR (Average True Range)</h3>
+            <h3>Average True Range (ATR)</h3>
+            <p>It's like a ruler measuring how much a stock's price moves.</p>
             <ul>
-                <li>ATR measures volatility. Higher ATR values suggest greater price movement.</li>
-                <li>Consider stocks with moderate to high ATR values based on your risk tolerance.</li>
+                <li>Higher values: The stock price is moving a lot</li>
+                <li>Lower values: The stock price is more stable</li>
             </ul>
         </div>
+        
         <div class="indicator">
-            <h3>EMA 200 (Exponential Moving Average)</h3>
+            <h3>Exponential Moving Average (EMA) 200</h3>
+            <p>It's like a long-term trend line for the stock.</p>
             <ul>
-                <li>Stocks trading above their 200-day EMA are often considered in an uptrend.</li>
-                <li>Look for stocks with positive EMA 200 slope (rising trend).</li>
+                <li>Price above EMA 200: The stock is generally going up</li>
+                <li>Rising EMA 200: The overall trend is positive</li>
             </ul>
         </div>
     </div>
