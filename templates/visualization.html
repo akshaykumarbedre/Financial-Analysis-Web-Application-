@@ -83,5 +83,44 @@
         <img src="data:image/png;base64,{{ plot_url_1200 }}" alt="Plot 240 Days">
       </div>
     </div>
+    <footer>
+      <div class="footer-content">
+          <div class="footer-section">
+              <h4>Main Pages</h4>
+              <ul>
+                  <li><a href="{{ url_for('index') }}">Home</a></li>
+                  <li><a href="{{ url_for('portfolio') }}">Portfolio</a></li>
+                  <li><a href="{{ url_for('compound_interest') }}">CI Calculator</a></li>
+                  <li><a href="{{ url_for('screener') }}">Stock Screener</a></li>
+                  <li><a href="{{ url_for('visualization') }}">Visualization</a></li>
+                  <li><a href="{{ url_for('blog') }}">Blog</a></li>
+              </ul>
+          </div>
+          <div class="footer-section">
+              <h4>User Access</h4>
+              <ul>
+                  <li><a href="{{ url_for('logout') }}">Logout</a></li>
+                  <li><a href="admin">Admin</a></li>
+              </ul>
+          </div>
+          <div class="footer-section">
+              <h4>About Us</h4>
+              <p>InvestorEdge provides AI-based personalized portfolio management and stock screening tools.</p>
+          </div>
+          <div class="footer-section">
+              <h4>Our Team</h4>
+              <ul>
+                  <li>Akshay Kumar BM</li>
+                  <li>Bharath BP</li>
+                  <li>Darshan J</li>
+                  <li>Harsha MJ</li>
+                  <li>Vedavathi BN</li>
+              </ul>
+          </div>
+      </div>
+      <div class="footer-bottom">
+          <p>&copy; 2024 InvestorEdge. All rights reserved.</p>
+      </div>
+  </footer>
   </body>
 </html>
